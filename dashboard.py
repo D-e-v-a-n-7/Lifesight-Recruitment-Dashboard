@@ -26,7 +26,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-@st.cache_data(ttl=60)  # Cache for only 60 seconds to help with debugging
+@st.cache_data(ttl=60)  # Cache for only 60 sec
 def load_data():
     """Load marketing and business data"""
     try:
@@ -227,6 +227,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
