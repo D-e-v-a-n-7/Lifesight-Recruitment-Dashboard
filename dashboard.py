@@ -33,8 +33,7 @@ def load_data():
     for platform, file in [('Facebook', 'Facebook.csv'), ('Google', 'Google.csv'), ('TikTok', 'TikTok.csv')]:
         df = pd.read_csv(file)
         df['platform'] = platform
-        dfs.append(df)
-    
+        dfs.append(df)    
     marketing_df = pd.concat(dfs, ignore_index=True)
     business_df = pd.read_csv('business.csv')
     
@@ -45,19 +44,16 @@ def load_data():
     # Safe calculations
     marketing_df['roas'] = marketing_df['attributed revenue'] / marketing_df['spend'].replace(0, 1)
     marketing_df['ctr'] = (marketing_df['clicks'] / marketing_df['impression'].replace(0, 1)) * 100
-    marketing_df['cpc'] = marketing_df['spend'] / marketing_df['clicks'].replace(0, 1)
-    
+    marketing_df['cpc'] = marketing_df['spend'] / marketing_df['clicks'].replace(0, 1)    
     return marketing_df, business_df
 
 def calculate_kpis(marketing_df, business_df):
     """Calculate KPIs"""
     if marketing_df.empty:
-        return {'total_spend': 0, 'total_attributed_revenue': 0, 'overall_roas': 0, 'blended_cac': 0}
-    
+        return {'total_spend': 0, 'total_attributed_revenue': 0, 'overall_roas': 0, 'blended_cac': 0}    
     total_spend = marketing_df['spend'].sum()
     total_attributed_revenue = marketing_df['attributed revenue'].sum()
-    total_new_customers = business_df['new customers'].sum() if not business_df.empty else 0
-    
+    total_new_customers = business_df['new customers'].sum() if not business_df.empty else 0    
     return {
         'total_spend': total_spend,
         'total_attributed_revenue': total_attributed_revenue,
@@ -68,35 +64,29 @@ def calculate_kpis(marketing_df, business_df):
 def create_channel_chart(marketing_df):
     """Create channel performance chart"""
     if marketing_df.empty:
-        return None, pd.DataFrame()
-        
+        return None, pd.DataFrame()        
     stats = marketing_df.groupby('platform').agg({
         'spend': 'sum',
         'attributed revenue': 'sum',
         'clicks': 'sum',
         'impression': 'sum'
-    }).reset_index()
-    
+    }).reset_index()    
     stats['roas'] = stats['attributed revenue'] / stats['spend']
     stats['ctr'] = (stats['clicks'] / stats['impression']) * 100
     
     # Simple bar chart for ROAS
     fig = px.bar(stats, x='platform', y='roas', 
                  title='ROAS by Channel',
-                 color='roas', color_continuous_scale='Blues')
-    
+                 color='roas', color_continuous_scale='Blues')    
     return fig, stats
 
 def create_spend_distribution_chart(marketing_df):
     """Create spend distribution pie chart"""
     if marketing_df.empty:
-        return None
-        
-    spend_by_platform = marketing_df.groupby('platform')['spend'].sum().reset_index()
-    
+        return None        
+    spend_by_platform = marketing_df.groupby('platform')['spend'].sum().reset_index()    
     fig = px.pie(spend_by_platform, values='spend', names='platform',
-                 title='Marketing Spend Distribution by Platform')
-    
+                 title='Marketing Spend Distribution by Platform')    
     return fig
 
 def main():
@@ -188,8 +178,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
