@@ -29,53 +29,14 @@ st.markdown("""
 @st.cache_data(ttl=60)  # Cache for only 60 sec
 def load_data():
     """Load marketing and business data"""
-    try:
-        # Load actual files
-        dfs = []
-        for platform, file in [('Facebook', 'Facebook.csv'), ('Google', 'Google.csv'), ('TikTok', 'TikTok.csv')]:
-            df = pd.read_csv(file)
-            df['platform'] = platform
-            dfs.append(df)
-        
-        marketing_df = pd.concat(dfs, ignore_index=True)
-        business_df = pd.read_csv('business.csv')
-        
-    except FileNotFoundError as e:
-        # Sample data
-        st.warning(f"CSV files not found. Error: {e}. Using sample data.")
-        dates = pd.date_range(start='2025-05-16', periods=120, freq='D')
-        
-        # Marketing data
-        marketing_data = []
-        for date in dates:
-            for platform in ['Facebook', 'Google', 'TikTok']:
-                impressions = np.random.randint(50000, 200000)
-                clicks = np.random.randint(1000, 5000)
-                spend = np.random.uniform(500, 3000)
-                
-                marketing_data.append({
-                    'date': date, 'platform': platform,
-                    'tactic': np.random.choice(['ASC', 'Retargeting', 'Search']),
-                    'state': np.random.choice(['NY', 'CA', 'TX', 'FL']),
-                    'impression': impressions, 'clicks': clicks, 'spend': spend,
-                    'attributed revenue': spend * np.random.uniform(1.5, 4.0)
-                })
-        
-        marketing_df = pd.DataFrame(marketing_data)
-        
-        # Business data
-        business_data = []
-        for date in dates:
-            revenue = np.random.uniform(20000, 40000)
-            business_data.append({
-                'date': date,
-                '# of orders': np.random.randint(200, 400),
-                'new customers': np.random.randint(40, 120),
-                'total revenue': revenue,
-                'gross profit': revenue * np.random.uniform(0.4, 0.6)
-            })
-        
-        business_df = pd.DataFrame(business_data)
+    dfs = []
+    for platform, file in [('Facebook', 'Facebook.csv'), ('Google', 'Google.csv'), ('TikTok', 'TikTok.csv')]:
+        df = pd.read_csv(file)
+        df['platform'] = platform
+        dfs.append(df)
+    
+    marketing_df = pd.concat(dfs, ignore_index=True)
+    business_df = pd.read_csv('business.csv')
     
     # Convert dates and calculate metrics
     marketing_df['date'] = pd.to_datetime(marketing_df['date'])
@@ -227,6 +188,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
