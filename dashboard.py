@@ -12,7 +12,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# CSS with light teal background - multiple selectors to ensure it works
+# CSS 
 st.markdown("""
 <style>
     .main > div { background-color: #bff0f2 !important; }
@@ -227,5 +227,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
