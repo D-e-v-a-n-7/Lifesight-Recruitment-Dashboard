@@ -5,8 +5,6 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import numpy as np
 from datetime import datetime
-import warnings
-warnings.filterwarnings('ignore')
 
 # Page configuration
 st.set_page_config(
@@ -229,4 +227,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
