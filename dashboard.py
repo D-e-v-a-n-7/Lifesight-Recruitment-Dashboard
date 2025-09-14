@@ -42,9 +42,9 @@ def load_data():
         marketing_df = pd.concat(dfs, ignore_index=True)
         business_df = pd.read_csv('Business.csv')
         
-    except FileNotFoundError:
+    except FileNotFoundError as e:
         # Sample data
-        st.warning("CSV files not found. Using sample data.")
+        st.warning(f"CSV files not found. Error: {e}. Using sample data.")
         dates = pd.date_range(start='2025-05-16', periods=120, freq='D')
         
         # Marketing data
