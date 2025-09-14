@@ -40,7 +40,7 @@ def load_data():
             dfs.append(df)
         
         marketing_df = pd.concat(dfs, ignore_index=True)
-        business_df = pd.read_csv('Business.csv')
+        business_df = pd.read_csv('business.csv')
         
     except FileNotFoundError as e:
         # Sample data
@@ -229,3 +229,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
