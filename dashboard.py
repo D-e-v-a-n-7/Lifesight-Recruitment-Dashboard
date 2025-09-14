@@ -28,7 +28,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-@st.cache_data
+@st.cache_data(ttl=60)  # Cache for only 60 seconds to help with debugging
 def load_data():
     """Load marketing and business data"""
     try:
